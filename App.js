@@ -10,12 +10,37 @@ export default function App() {
   const [isShowingCart, setIsShowingCart] = useState(false);
   const [products, setProducts] = useState([]);
   const [cartProducts, setCartProducts] = useState([]);
+  const [cartProductCount, setCartProductCount] = useState(0);
 
-  const addProductToCart = async (product) => {
-    setCartProducts((currentItems) => [
-      ...currentItems,
-      product,
-    ]);
+  const getCartCount = () => {
+    var total = 0;
+    cartProducts.forEach((product) => {
+      total = total + product.count;
+    });
+    return total;
+  };
+
+  const addProductToCart = async (productId) => {
+    const product = products.find((p) => {
+      if (p.id === productId) {
+        return true;
+      }
+      return false;
+    });
+
+    
+    const found = cartProducts.find((p) => {
+      if (p.id === productId) {
+        p.count = p.count + 1;
+        return true;
+      }
+      return false;
+    });
+
+    if (!found) {
+      setCartProducts((currentItems) => [...currentItems, product]);
+    }
+    setCartProductCount(getCartCount());
   };
 
   const getAllProducts = async () => {
@@ -30,6 +55,7 @@ export default function App() {
             url: item.image,
             price: 3.65,
             type: item.type,
+            count: 1,
           });
         });
         setProducts(result);
@@ -44,7 +70,7 @@ export default function App() {
 
       <View style={styles.screen}>
         <Button title="Load Products" onPress={getAllProducts} />
-        
+
         <FlatList
           style={{ flex: 1 }}
           keyExtractor={(item, index) => item.id}
@@ -62,7 +88,7 @@ export default function App() {
         />
       </View>
 
-      <BottomBar productCount={cartProducts.length} />
+      <BottomBar productCount={getCartCount()} selectedIndex={0} />
     </View>
   );
 }

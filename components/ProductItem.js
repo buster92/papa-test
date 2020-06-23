@@ -17,9 +17,6 @@ const ProductItem = (props) => {
           color: "#062baa",
           unfilledColor: "#0e6605",
         }}
-        // disable loading indicator
-        //indicatorColor="white" // react native colors or color codes like #919191
-        // indicatorSize="small" // (small | large) or integer
         source={{
           uri: props.url,
         }}

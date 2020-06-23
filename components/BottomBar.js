@@ -9,7 +9,7 @@ const BottomBar = (props) => {
       <View style={styles.buttonContainer}>
         <TouchableOpacity style={{ flex: 1 }}>
           <View style={styles.button}>
-            <Text style={styles.buttonText}>Products</Text>
+            <Text style={props.selectedIndex == 0 ? styles.buttonTextSelected : styles.buttonText}>Products</Text>
           </View>
         </TouchableOpacity>
 
@@ -17,7 +17,8 @@ const BottomBar = (props) => {
 
         <TouchableOpacity style={{ flex: 1 }}>
           <View style={styles.button}>
-            <Text style={styles.buttonText}>
+            
+            <Text style={props.selectedIndex == 1 ? styles.buttonTextSelected : styles.buttonText}>
               {"Cart(" + props.productCount + ")"}
             </Text>
           </View>
@@ -59,6 +60,11 @@ const styles = StyleSheet.create({
   buttonText: {
     fontSize: 14,
     color: "white",
+  },
+  buttonTextSelected: {
+    fontSize: 14,
+    color: "white",
+    fontWeight:"bold",
   },
 });
 
